@@ -13,7 +13,7 @@ COPY response.varfile /tmp/
 RUN wget https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-${JIRA_VERSION}-x64.bin
 RUN chmod a+x atlassian-jira-${JIRA_VERSION}-x64.bin
 RUN mkdir /jira 
-EXPOSE 8085
+EXPOSE 8080
 
 RUN /tmp/atlassian-jira-${JIRA_VERSION}-x64.bin -q -varfile response.varfile
 RUN rm /tmp/atlassian-jira-${JIRA_VERSION}-x64.bin
