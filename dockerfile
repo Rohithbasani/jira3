@@ -1,0 +1,22 @@
+FROM ubuntu:14.04
+MAINTAINER Rohith Basani <r.basani@bssn-software.eu>
+ENV JIRA_VERSION 5.2.11
+RUN mkdir ~/jirasetup
+RUN apt-get update
+#RUN apt-get upgrade -y
+RUN apt-get install -y wget
+RUN apt-get clean
+WORKDIR /tmp
+#response.varfile contains the options specified during the previous Jira installation. We use the same configuration for installing the current version automatically.
+
+COPY response.varfile /tmp/
+RUN wget https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-${JIRA_VERSION}-x64.bin
+RUN chmod a+x atlassian-jira-${JIRA_VERSION}-x64.bin
+RUN mkdir /jira 
+EXPOSE 8085
+
+RUN /tmp/atlassian-jira-${JIRA_VERSION}-x64.bin -q -varfile response.varfile
+RUN rm /tmp/atlassian-jira-${JIRA_VERSION}-x64.bin
+RUN rm /tmp/response.varfile
+CMD /opt/atlassian/jira/bin/start-jira.sh -fg
+
